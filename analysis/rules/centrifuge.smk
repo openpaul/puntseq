@@ -144,6 +144,9 @@ rule convert_silva_db_to_dna:
     output:
         "data/centrifuge_16s_db/data/SILVA_132_SSURef_Nr99_tax_silva.fasta"
     threads: 1
+    params:
+        old_base = "U",
+        new_base = "T",
     resources:
         mem_mb = 500
     log:
