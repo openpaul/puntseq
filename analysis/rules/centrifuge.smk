@@ -11,7 +11,7 @@ rule download_centrifuge_taxonomy:
         "logs/download_centrifuge_taxonomy.log"
     shell:
         """
-        centrifuge-download -o data/centrifuge_db/taxonomy taxonomy 2> {log}
+        centrifuge-download -o data/centrifuge_db/taxonomy taxonomy
         """
 
 
@@ -30,7 +30,7 @@ rule download_centrifuge_library:
         "logs/download_centrifuge_library.log"
     shell:
         """
-        centrifuge-download -o {output.library} -m -d {params.domain} refseq > {output.mapping} 2> {log}
+        centrifuge-download -o {output.library} -m -d {params.domain} refseq > {output.mapping} 
         """
 
 rule combine_centrifuge_library_sequences:
@@ -70,7 +70,7 @@ rule build_centrifuge_db:
         """
         centrifuge-build -p {threads} --conversion-table {input.conversion_table} \
                  --taxonomy-tree {input.tax_tree} --name-table {input.name_table} \
-                 {input.sequences} {params.prefix} &> {log}
+                 {input.sequences} {params.prefix}
         """
 
 
@@ -98,7 +98,7 @@ rule centrifuge:
           --threads {threads} \
           --report-file {output.report} \
           -S {output.classification} \
-          --met-stderr 2> {log}
+          --met-stderr
         """
 
 rule centrifuge_krakenstyle_report:
@@ -117,7 +117,7 @@ rule centrifuge_krakenstyle_report:
         config["container"]
     shell:
         """
-        centrifuge-kreport -x {params.index_prefix} {input} > {output} 2> {log}
+        centrifuge-kreport -x {params.index_prefix} {input} > {output} 
         """
 
 rule download_centrifuge_16s_resources:
@@ -134,8 +134,8 @@ rule download_centrifuge_16s_resources:
         "logs/download_centrifuge_16s_resources.log"
     shell:
         """
-        wget {params.seq_url} -O - | gzip -d -c - > {output.ref_seqs} 2> {log}
-        wget {params.taxmap_url} -O - | gzip -d -c - > {output.taxmap} 2>> {log} 
+        wget {params.seq_url} -O - | gzip -d -c - > {output.ref_seqs}
+        wget {params.taxmap_url} -O - | gzip -d -c - > {output.taxmap}
         """
 
 rule convert_silva_db_to_dna:
@@ -196,7 +196,7 @@ rule build_centrifuge_16s_db:
           --taxonomy-tree {input.tax_tree} \
           --name-table {input.name_table} \
           {input.ref_seqs} \
-          {params.prefix} 2> {log}
+          {params.prefix} 
         """
 
 rule centrifuge_16s_classify:
@@ -223,7 +223,7 @@ rule centrifuge_16s_classify:
           --threads {threads} \
           --report-file {output.report} \
           -S {output.classification} \
-          --met-stderr 2> {log}
+          --met-stderr 
         """
 
 rule centrifuge_16s_krakenstyle_report:

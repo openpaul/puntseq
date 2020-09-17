@@ -1,9 +1,10 @@
 container:                         "containers/puntseq.simg"
+#container: "shub://hexmek/container:puntseq"
 samples:                           "docs/samples.csv"
 
 porechop:
-    threads     :                  4
-    memory    :                    32000
+    threads     :                  8
+    memory    :                    120000
     check_reads:                   50000
 
 
@@ -30,12 +31,12 @@ plot:
 
 
 build_centrifuge_db:
-    threads:                       32
-    memory:                        600000
+    threads:                       16
+    memory:                        250000
 
 centrifuge:
     threads     :                  16
-    memory    :                    16000
+    memory    :                    64000
 
 
 centrifuge_16s:
@@ -45,7 +46,7 @@ centrifuge_16s:
 
 build_centrifuge_16s_db:
     threads     :                  16
-    memory    :                    10000
+    memory    :                    14000
 
 
 download_kraken2_db:
@@ -55,7 +56,7 @@ download_kraken2_db:
 
 build_kraken2_db:
     threads     :                  32
-    memory    :                    32000
+    memory    :                    40000
 
 
 build_kraken2_16s_db:
@@ -65,17 +66,17 @@ build_kraken2_16s_db:
 
 kraken2_classify:
     threads     :                  32
-    memory    :                    32000
+    memory    :                    120000
 
 
 kraken2_16s_classify:
     threads     :                  16
-    memory    :                    500
+    memory    :                    3000
 
 
 build_bracken_db:
-    threads     :                  32
-    memory    :                    32000
+    threads     :                  8
+    memory    :                    120000
     read_length:                   1450
     kmer_length:                   35
 

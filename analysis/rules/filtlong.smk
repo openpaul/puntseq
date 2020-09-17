@@ -32,7 +32,8 @@ rule filter_length:
     log:
         "logs/filter_length_{run}_{sample}.log"
     singularity: 
-        "containers/nanofilt.v2.5.0.simg"
+        #"containers/nanofilt.v2.5.0.simg"
+        "/hps/nobackup2/singularity/saary/hexmek-container-master-nanofilt.simg"
     shell:
         """
         gzip -d -c {input} | \

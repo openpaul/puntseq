@@ -1,5 +1,16 @@
 __default__:
     name      : "{rule}.{wildcards}"
-    output    : "logs/cluster_{rule}.{wildcards}.o"
-    error     : "logs/cluster_{rule}.{wildcards}.e"
+    output    : "logs/cluster_{rule}.{wildcards}%J.o"
+    error     : "logs/cluster_{rule}.{wildcards}%J.e"
     queue     : "research-rh74"
+    bigmem: ""
+
+
+build_centrifuge_db:
+    bigmem: "-P bigmem"
+build_bracken_db:
+    bigmem: "-P bigmem"
+porechop:
+    bigmem: "-P bigmem"
+kraken2_classify:
+    bigmem: "-P bigmem"

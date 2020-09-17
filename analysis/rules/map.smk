@@ -8,8 +8,9 @@ rule map:
         config["map"].get("threads", 1)
     resources:
         mem_mb = lambda wildcards, attempt: attempt * config["map"]["memory"]
-    #singularity:
-    #    config["container"]
+    singularity:
+        #config["container"]
+        "/hps/nobackup2/singularity/saary/nanozoo-minimap2-2.17--caba7af.img"
     params:
         extra = "-K 25M --no-kalloc --print-qname -aLx map-ont"
     log:
