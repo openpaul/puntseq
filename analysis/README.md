@@ -62,3 +62,10 @@ Simples 🤘
 
 ## Debugging
 All log files will be deposited in the the `analysis/logs` directory. Each rule will generate 3 log files. One with the `stderr` of the program it is running (file wildcard `.log`), one with the `stderr` of the cluster job running the rule (file wildcard `cluster_*.e`), and one containing the `stdout` of the cluster job (file wildcard `cluster_*.o`). Check the last entry in the `*.o` file to find out of the job completed successfully or whether it hit a memory limit. Check the `*.e` file for issues relating to `snakemake` job submission. And check the `*.log` file for any issues relating to the program itself.
+
+
+### launch manually
+```
+snakemake --use-conda -k --jobs 500  --cluster-config config/cluster.yaml --cluster "bsub  -g puntseq -n {threads} -M {resources.mem_mb}  -e {cluster.error} -o {cluster.output} -J {cluster.name}"  --use-singularity -n
+
+```
