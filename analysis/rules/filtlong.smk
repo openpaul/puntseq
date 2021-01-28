@@ -40,3 +40,25 @@ rule filter_length:
         NanoFilt --length {params.min_len} --maxlength {params.max_len} | \
         gzip > {output} 2> {log}
         """
+
+rule filter_length_shotgun:
+    input:
+        "data/{run}/shotgun/raw/{sample}.trimmed.fastq.gz"
+    output:
+        "data/{run}/shotgun/filtlong/{sample}.filtered.fastq.gz"
+    threads: 1
+    resources:
+        mem_mb = lambda wildcards, attempt: attempt * config["filter_length"]["memory"]
+    params:
+        min_len = config["filter_length"]["max_len"],
+    log:
+        "logs/filter_length_{run}_{sample}.log"
+    singularity: 
+        #"containers/nanofilt.v2.5.0.simg"
+        "/hps/nobackup2/singularity/saary/hexmek-container-master-nanofilt.simg"
+    shell:
+        """
+        gzip -d -c {input} | \
+        NanoFilt --length {params.min_len} | \
+        gzip > {output} 2> {log}
+        """

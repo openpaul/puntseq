@@ -101,6 +101,34 @@ rule centrifuge:
           --met-stderr
         """
 
+
+rule centrifuge_shotgun:
+    input:
+        rules.build_centrifuge_db.output,
+        fastq = "data/{run}/shotgun/filtlong/{sample}.filtered.fastq.gz"
+    output:
+        report = "data/{run}/shotgun/centrifuge/centrifuge_report_{run}_{sample}.tsv",
+        classification = "data/{run}/shotgun/centrifuge/centrifuge_classification_{run}_{sample}.tab"
+    threads:
+        config["centrifuge"]["threads"]
+    resources:
+        mem_mb = lambda wildcards, attempt: attempt * config["centrifuge"]["memory"]
+    params:
+        index_prefix = "data/centrifuge_db/archaea_bacteria"
+    singularity:
+        config["container"]
+    log:
+        "logs/centrifuge_{run}_{sample}.log"
+    shell:
+        """
+        centrifuge -x {params.index_prefix} \
+          -U {input.fastq} \
+          --threads {threads} \
+          --report-file {output.report} \
+          -S {output.classification} \
+          --met-stderr
+        """
+
 rule centrifuge_krakenstyle_report:
     input:
         "data/{run}/centrifuge/centrifuge_classification_{run}_{sample}.tab"
